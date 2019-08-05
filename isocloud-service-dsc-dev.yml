@@ -5,9 +5,9 @@ spring:
     joda-date-time-format: yyyy-MM-dd HH:mm:ss
     date-format: yyyy-MM-dd HH:mm:ss
   datasource:
-    url: jdbc:mysql://isocloud-db-mysql:3307/isocloud_dsc?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    url: jdbc:mysql://192.168.1.8:3306/isocloud_dsc?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
     username: root
-    password: yxt1108
+    password: yxt@1109
 
 mybatis:
   type-aliases-package: com.isosaas.isocloud.service.dsc.model.auto

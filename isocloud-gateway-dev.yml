@@ -27,9 +27,9 @@ spring:
         - id: isocloud-web-dsc
           uri: lb://isocloud-web-dsc
           predicates:
-              - Path=/dsc/**
+            - Path=/dsc/**
           filters:
-              - StripPrefix=1
+            - StripPrefix=1
         - id: isocloud-web-tpc
           uri: lb://isocloud-web-tpc
           predicates:

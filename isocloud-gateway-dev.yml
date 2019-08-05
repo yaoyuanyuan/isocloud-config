@@ -18,47 +18,47 @@ spring:
       locator:
         enabled: true
       routes:
-      - id: isocloud-web-uac
-      uri: lb://isocloud-web-uac
-      predicates:
+        - id: isocloud-web-uac
+          uri: lb://isocloud-web-uac
+          predicates:
             - Path=/uac/**
-      filters:
+          filters:
             - StripPrefix=1
-      - id: isocloud-web-dsc
-      uri: lb://isocloud-web-dsc
-      predicates:
+        - id: isocloud-web-dsc
+          uri: lb://isocloud-web-dsc
+          predicates:
               - Path=/dsc/**
-      filters:
+          filters:
               - StripPrefix=1
-      - id: isocloud-web-tpc
-      uri: lb://isocloud-web-tpc
-      predicates:
+        - id: isocloud-web-tpc
+          uri: lb://isocloud-web-tpc
+          predicates:
             - Path=/tpc/**
-      filters:
+          filters:
             - StripPrefix=1
-      - id: isocloud-web-scc
-      uri: lb://isocloud-web-scc
-      predicates:
+        - id: isocloud-web-scc
+          uri: lb://isocloud-web-scc
+          predicates:
             - Path=/scc/**
-      filters:
+          filters:
             - StripPrefix=1
-      - id: isocloud-web-sac
-      uri: lb://isocloud-web-sac
-      predicates:
+        - id: isocloud-web-sac
+          uri: lb://isocloud-web-sac
+          predicates:
             - Path=/sac/**
-      filters:
+          filters:
             - StripPrefix=1
-      - id: isocloud-web-oac
-      uri: lb://isocloud-web-oac
-      predicates:
+        - id: isocloud-web-oac
+          uri: lb://isocloud-web-oac
+          predicates:
             - Path=/oac/**
-      filters:
+          filters:
             - StripPrefix=1
-      - id: isocloud-web-wfc
-      uri: lb://isocloud-web-wfc
-      predicates:
+        - id: isocloud-web-wfc
+          uri: lb://isocloud-web-wfc
+          predicates:
             - Path=/wfc/**
-      filters:
+          filters:
             - StripPrefix=1
 #  security:
 #    basic:

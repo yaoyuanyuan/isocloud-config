@@ -1,0 +1,155 @@
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+    multipart:
+      enabled: true
+      max-request-size: 50MB
+      max-file-size: 50MB
+  cloud:
+    gateway:
+      default-filters:
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+      locator:
+        enabled: true
+      routes:
+        - id: isocloud-web-uac
+          uri: lb://isocloud-web-uac
+          predicates:
+            - Path=/uac/**
+          filters:
+            - StripPrefix=1
+        - id: isocloud-web-dsc
+            uri: lb://isocloud-web-dsc
+            predicates:
+              - Path=/dsc/**
+            filters:
+              - StripPrefix=1
+        - id: isocloud-web-tpc
+          uri: lb://isocloud-web-tpc
+          predicates:
+            - Path=/tpc/**
+          filters:
+            - StripPrefix=1
+        - id: isocloud-web-scc
+          uri: lb://isocloud-web-scc
+          predicates:
+            - Path=/scc/**
+          filters:
+            - StripPrefix=1
+        - id: isocloud-web-sac
+          uri: lb://isocloud-web-sac
+          predicates:
+            - Path=/sac/**
+          filters:
+            - StripPrefix=1
+        - id: isocloud-web-oac
+          uri: lb://isocloud-web-oac
+          predicates:
+            - Path=/oac/**
+          filters:
+            - StripPrefix=1
+        - id: isocloud-web-wfc
+          uri: lb://isocloud-web-wfc
+          predicates:
+            - Path=/wfc/**
+          filters:
+            - StripPrefix=1
+#  security:
+#    basic:
+#      enabled: true
+#    user:
+#      name: root
+#      password: root
+#  management:
+#    security:
+#      enabled: false
+
+#zuul:
+#  host:
+#    socket-timeout-millis: 60000
+#    connect-timeout-millis: 60000
+#  forceOriginalQueryStringEncoding: true
+#  routes:
+#    uac-route:
+#      path: /uac/**
+#      sensitiveHeaders:
+#      #strip-prefix: false
+#      service-id: isocloud-web-uac
+#      ribbon:
+#        eager-load:
+#          enabled: true
+#        MaxAutoRetries: 1
+#        MaxAutoRetriesNextServer: 2
+#        OkToRetryOnAllOperations: false
+#        ConnectTimeout: 10000
+#        ReadTimeout: 10000
+#    tpc-route:
+#      path: /tpc/**
+#      sensitiveHeaders:
+#      service-id: isocloud-web-tpc
+#      ribbon:
+#        eager-load:
+#          enabled: true
+#        MaxAutoRetries: 1
+#        MaxAutoRetriesNextServer: 2
+#        OkToRetryOnAllOperations: false
+#        ConnectTimeout: 10000
+#        ReadTimeout: 10000
+#    sac-route:
+#      path: /sac/**
+#      sensitiveHeaders:
+#      #strip-prefix: false
+#      service-id: isocloud-web-sac
+#      ribbon:
+#        eager-load:
+#          enabled: true
+#        MaxAutoRetries: 1
+#        MaxAutoRetriesNextServer: 2
+#        OkToRetryOnAllOperations: false
+#        ConnectTimeout: 10000
+#        ReadTimeout: 10000
+#  add-proxy-headers: true
+#  add-host-header: true
+
+# spring security 单点登录配置
+security:
+  oauth2:
+    client:
+      clientId: isocloud-gateway
+      clientSecret: isocloudClientSecret
+      access-token-uri: http://isocloud-gateway:7082/uac/oauth/token
+      user-authorization-uri: http://isocloud-gateway:7082/uac/oauth/authorize
+    resource:
+      loadBalanced: true
+      #token-info-uri: http://isocloud-web-uac/oauth/token_key
+      user-info-uri: http://isocloud-gateway:7082/uac/user
+      prefer-token-info: false
+      jwt:
+        #key-uri: http://isocloud-web-uac:9080/oauth/token_key
+        key-uri: http://isocloud-gateway:7082/uac/oauth/token_key
+
+proxy:
+  auth:
+    routes:
+      uac-route: oauth2
+      mdc-route: oauth2
+
+isocloud:
+  enableSqlLogInterceptor: false
+## swagger butler配置
+#swagger.butler:
+#  api-docs-path: v2/api-docs
+#  swagger-version: 2.0
+#  auto-generate-from-zuul-routes: true
+## 指定要生成的范围
+#  generate-routes: tpc-route,uac-route,sac-route
+## 忽略某些路由生成
+##  ignore-routes:
+swagger2:
+  enable=true:

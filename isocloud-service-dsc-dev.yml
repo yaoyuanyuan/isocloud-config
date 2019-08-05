@@ -1,0 +1,56 @@
+spring:
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  jackson:
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://isocloud-db-mysql:3307/isocloud_dsc?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: yxt1108
+
+mybatis:
+  type-aliases-package: com.isosaas.isocloud.service.dsc.model.auto
+  mapper-locations: classpath:mapper/*.xml,classpath*:sdk/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+mapper:
+  mappers: com.isosaas.isocloud.common.core.ibatis.BaseMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+rocketmq:
+  # 生产者配置
+  producer:
+    instanceName: isocloud-service-dsc
+    producerGroupName: DscProducerGroup
+    namesrvAddr: 127.0.0.1:9876
+    # sendResult返回的sendStatus!=SEND_OK 是否重试
+    retryAnotherBrokerWhenNotStoreOK: true
+  # 消费者配置
+  pushconsumer:
+    instanceName: isocloud-service-dsc
+    consumerGroupName: DscPushConsumerGroup
+    namesrvAddr: 127.0.0.1:9876
+    topic: smsTopic
+    tags: smsTags
+
+# xxl 执行器配置
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.2.21:30085/xxl-job-admin
+    executor:
+      appname: job-dsc
+      ip:
+      port: 9091
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: -1
+    accessToken:

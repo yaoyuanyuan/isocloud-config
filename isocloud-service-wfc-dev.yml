@@ -1,0 +1,60 @@
+spring:
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  jackson:
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://isocloud-db-mysql:3307/isocloud_wfc?characterEncoding=utf8&createDatabaseIfNotExist=true&&useSSL=false
+    username: root
+    password: yxt1108
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat,wall
+    druid:
+      initial-size: 50
+      min-idle: 50
+      max-active: 100
+      test-on-borrow: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      web-stat-filter:
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      stat-view-servlet:
+        allow:
+        login-username: admin
+        login-password: admin
+  activiti:
+    database-schema-update: true
+    check-process-definitions: false #启动不检查是否有流程文件
+    process-definition-location-prefix: classpath:/processes/
+    history-level: full #设置历史记录的级别
+
+mybatis:
+  type-aliases-package: com.isosaas.isocloud.service.wfc.model
+  mapper-locations: classpath:mapper/*.xml,classpath*:sdk/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+mapper:
+  mappers: com.isosaas.isocloud.common.core.ibatis.BaseMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# xxl 执行器配置
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.2.21:30085/xxl-job-admin
+    executor:
+      appname: job-wfc
+      ip:
+      port: 9094
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: -1
+    accessToken:

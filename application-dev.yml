@@ -1,0 +1,148 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    remote-ip-header: x-forwarded-for
+  use-forward-headers: true
+
+#management:
+#    enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+security:
+#oauth2:
+#  resource:
+#    loadBalanced: true
+#    token-info-uri: http://isocloud-gateway:7082/uac/oauth/token
+  user:
+    name: admin
+    password: 123456
+  basic:
+    enabled: false
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  aop:
+    proxy-target-class: true
+    auto: true
+  rabbitmq:
+    host: isocloud-rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+  redis:
+    host: isocloud-redis
+    password:
+    port: 6379
+    timeout: 5000
+  boot:
+    admin:
+      username: admin
+      password: admin
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+  sleuth:
+    sampler:
+      probability: 1
+
+#feign:
+#  hystrix:
+#    enabled: false
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 5000
+#        readTimeout: 5000
+# feign 配置
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+
+ribbon:
+  eager-load:
+    enabled: true
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+  OkToRetryOnAllOperations: false
+  ConnectTimeout: 60000
+  ReadTimeout: 20000
+
+
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        timeout:
+#          enabled: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 20000
+# hystrix 配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 60000
+  shareSecurityContext: true
+
+isocloud:
+  auth:
+    jwt:
+      expiredRemainMinutes: 20
+      expiredMinutes: 120
+  aliyun:
+    key:
+      accessKeyId: 'your aliyun accessKeyId'
+      accessKeySecret: 'your aliyun accessKeySecret'
+    rocketMq:
+      namesrvAddr: paascloud-mq-rocket:9876
+#    sms:
+#      signName: 艾思欧
+#      regionId: cn-beijing
+#      endpoint:
+#      endpointName: cn-beijing
+#      product: 'your sms product'
+#      domain: dysmsapi.aliyuncs.com
+#  qiniu:
+#    key:
+#      accessKey: 'your qiniu accessKey'
+#      secretKey: 'your qiniu secretKey'
+#    oss:
+#      privateHost: 'your qiniu oss private host'
+#      publicHost: 'your qiniu oss public host'
+#  alipay:
+#    callback:
+#      url:
+#    qrCode:
+#      pcPath: /data/file/qrCode/alipay
+#      qiniuPath: alipay/QRCode/
+  #zk:
+    #zkAddressList:

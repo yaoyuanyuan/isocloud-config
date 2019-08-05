@@ -1,0 +1,111 @@
+spring:
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  jackson:
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://isocloud-db-mysql:3307/isocloud_sac?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: yxt1108
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5      #初始化连接个数
+      max-active: 20       #最大连接个数
+      min-idle: 5          #最小连接个数
+      max-wait: 6000       #最大等待时间
+      pool-prepared-statements: true                        #开启缓存PSCache
+      max-pool-prepared-statement-per-connection-size: 20   #指定每个连接上PSCache的大小
+      time-between-eviction-runs-millis: 6000               #在空闲连接回收器线程运行期间休眠的时间值
+      min-evictable-idle-time-millis: 100000                # 配置一个连接在池中最小生存的时间
+      validation-query: SELECT 1 FROM DUAL                  #用来检测连接是否有效的sql
+      validation-query-timeout: 60000                       #检查sql超时时间
+      test-while-idle: true     #申请连接的时候检测
+      test-on-borrow: false     #申请连接时执行validationQuery检测连接是否有效
+      test-on-return: false     #归还连接时执行validationQuery检测连接是否有效
+      #开启StatFilter
+      stat:
+        enabled: true
+        log-slow-sql: true
+        slow-sql-millis: 1000
+      #开启Slf4jFilter
+      slf4j:
+        enabled: true
+        data-source-log-enabled: false
+        connection-log-enabled: false
+        statement-log-enabled: false
+        result-set-log-enabled: false
+      #开启WallFilter
+      wall:
+        enabled: true
+        log-violation: true
+        throw-exception: false
+        config:
+          delete-where-none-check: true
+      #开启Web监控
+      web-stat:
+        enabled: true
+      #开启Aop监控
+      aop-stat:
+        enabled: true
+      #开启监控页面
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
+  http:
+      multipart:
+        enabled: true
+        max-file-size: 30MB
+        max-request-size: 30MB
+oos:
+  endpoint: http://oss-cn-shenzhen.aliyuncs.com
+  accessKeyId: LTAI8iYS6NmE8Qcj
+  accessKeySecret: b6V9ffptZN1xaKAJPQsXGo00x3e6cd
+  bucketName: 20190610
+
+office:
+  store: /files/
+  max-size: 45242880
+  converter-url: http://192.168.19.102:8081/ConvertService.ashx
+  tempstore-url: http://192.168.19.102:8081/ResourceService.ashx
+  api-url: http://192.168.19.102:8081/web-apps/apps/api/documents/api.js
+  preloader-url: http://192.168.19.102:8081/web-apps/apps/api/documents/cache-scripts.html
+  viewed-docs: .pdf|.djvu|.xps
+  edited-docs: .docx|.xlsx|.csv|.pptx|.ppsx|.txt
+  convert-docs: .docm|.dotx|.dotm|.dot|.doc|.odt|.fodt|.xlsm|.xltx|.xltm|.xlt|.xls|.ods|.fods|.pptm|.ppt|.ppsm|.pps|.potx|.potm|.pot|.odp|.fodp|.rtf|.mht|.html|.htm|.epub
+
+mybatis:
+  type-aliases-package: com.isosaas.isocloud.service.uac.model
+  mapper-locations: com/isosaas/isocloud/service/uac/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+mapper:
+  mappers: com.isosaas.isocloud.common.core.ibatis.BaseMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# xxl 执行器配置
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.2.21:30085/xxl-job-admin
+    executor:
+      appname: job-sac
+      ip:
+      port: 9092
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: -1
+    accessToken:
+
+management:
+  security:
+    enabled: false

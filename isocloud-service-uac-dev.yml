@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:mysql://192.168.1.8:3306/isocloud_uac?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: emmpdb
+    username: root
     password: yxt@1109
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
